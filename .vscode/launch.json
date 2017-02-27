@@ -8,7 +8,7 @@
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
-      "program": "${workspaceRoot}/build_tower.js",
+      "program": "${workspaceRoot}/sudoku.js",
       "cwd": "${workspaceRoot}"
     },
     {

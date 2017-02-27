@@ -1,0 +1,111 @@
+<html>
+  <head>
+    <style>
+      .cell {
+        width: 4px;
+        height: 4px;
+        margin: 0 1px 1px 0;
+        background: gainsboro;
+        float: left;
+      }
+      .alive {
+        background: black;
+      }
+      .row {
+        clear: both;
+        float: left;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div style="width:100%; height:100%" id="map">
+
+    </div>
+    <script>
+      function simulateStep(mapData) {
+  for (x = 0; x < mapData.length; x++) {
+    for(y = 0; y < mapData[x].length; y++) {
+      let neighbours = 0
+      if (mapData[x-1] && mapData[x-1][y-1])
+        neighbours++;
+      if (mapData[x-1] && mapData[x-1][y])
+        neighbours++;
+      if (mapData[x-1] && mapData[x-1][y+1])
+        neighbours++;
+      if (mapData[x] && mapData[x][y-1])
+        neighbours++;
+      if (mapData[x] && mapData[x][y+1])
+        neighbours++;
+      if (mapData[x+1] && mapData[x+1][y-1])
+        neighbours++;
+      if (mapData[x+1] && mapData[x+1][y])
+        neighbours++;
+      if (mapData[x+1] && mapData[x+1][y+1])
+        neighbours++;
+      
+      if (neighbours == 2 || neighbours == 3) {
+        mapData[x][y] = 1 
+      } else {
+        mapData[x][y] = 0
+      }
+    }
+  }
+}
+
+function generateData() {
+  var data = new Array()
+  for (i = 0; i < 100; i++) {
+    data.push(new Array)
+    for(j = 0; j < 100; j++) {
+      data[i].push(0)
+    }
+  }
+  return data;
+}
+
+function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function clean() {
+  var map = document.getElementById("map")
+  map.parentNode.removeChild(map)
+}
+
+function renderMap(mapData) {
+  clean()
+  var map = document.createElement('div')
+  map.id = 'map'
+  document.body.appendChild(map)
+  map = document.getElementById("map")
+
+  for (i = 0; i < mapData.length; i++) {
+    var rowNode = document.createElement("div")
+    rowNode.className = "row"
+    var row = map.appendChild(rowNode)
+
+    for(j = 0; j < mapData[i].length; j++) {
+      var cellNode = document.createElement("div")
+      cellNode.className = mapData[i][j] ? "cell alive" : "cell"
+      row.appendChild(cellNode)    
+    }
+  
+  }
+}
+
+var mapData = generateData()
+mapData[1][1] = 1;
+mapData[0][0] = 1;
+mapData[0][1] = 1;
+
+setInterval(function(){
+  renderMap(mapData)
+  simulateStep(mapData) 
+}, 1)
+
+    </script>
+  </body>
+</html>
