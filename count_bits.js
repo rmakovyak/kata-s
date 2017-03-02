@@ -10,5 +10,5 @@ var countBits = function(n) {
   let positiveBits = binary.filter((bit) => bit == 1)
   return positiveBits.length
 };
-
 var countBits = n => n.toString(2).split('0').join('').length;
+console.info(countBits);
